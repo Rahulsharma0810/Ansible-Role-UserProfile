@@ -1,0 +1,16 @@
+---
+
+galaxy_info:
+  author: Rahul Sharma
+  description: rm command save files to .local
+  company:
+  min_ansible_version: 1.7
+  platforms:
+  - name: EL
+    versions:
+    - 7
+  categories:
+  - development
+  - web
+
+dependencies: []

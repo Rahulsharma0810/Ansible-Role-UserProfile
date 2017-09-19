@@ -1,0 +1,43 @@
+- block:
+  - command: which vim
+    name: Checking VIM
+    register: vim_check_sudo
+
+  - name: Installing DEPENDENCIES FOR LARAVEL
+    yum:
+      name: vim
+      state: latest
+    when: vim_check_sudo|failed
+  become: true
+
+- block:
+  - file:
+      path: ~/.GHOST-MODULES/SHELL-SAFE-RM/rm.sh
+      state: absent
+  - file:
+      path: ~/.GHOST-MODULES/SHELL-SAFE-RM/
+      state: directory
+  - file:
+      path: ~/.GHOST-MODULES/SHELL-SAFE-RM/rm.sh
+      state: touch
+  - name: INSERT/UPDATE CONFIGURATION USING A LOCAL FILE
+    copy:
+      src: templates/rm.j2
+      dest: "~/.GHOST-MODULES/SHELL-SAFE-RM/rm.sh"
+  - name: MAKE SAFE-RM EXECUTABLE
+    file: 
+      path: "~/.GHOST-MODULES/SHELL-SAFE-RM/rm.sh"
+      mode: a+x
+      state: file
+  - name: ADDING SHELL-SAFE-RM ALIASES TO /etc/bashrc
+    lineinfile:
+      path: ~/.bashrc 
+      line: "alias rm='~/.GHOST-MODULES/SHELL-SAFE-RM/rm.sh'"
+  - name: RELOADING BASHRC
+    action: shell source ~/.bashrc
+  - name: UPDATING VIMRC PROFILE
+    copy:
+      src: templates/vimrc.j2
+      dest: "~/.vimrc"
+  become: true
+  become_user: "{{ profile_user }}"

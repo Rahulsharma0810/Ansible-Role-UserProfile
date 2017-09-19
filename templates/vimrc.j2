@@ -1,0 +1,26 @@
+"Turn on backup option
+set backup
+
+"Where to store backups
+set backupdir=~/.local/share/Trash/files/
+
+"Make backup before overwriting the current buffer
+set writebackup
+
+"Overwrite the original backup file
+set backupcopy=yes
+
+"Meaningful backup name, ex: filename@2015-04-05.14:59
+au BufWritePre * let &bex = '@' . strftime("%F.%H:%M") . 'VIM'
+
+set number 				"Set Number
+
+syntax enable           " enable syntax processing
+
+set showcmd             " show command in bottom bar
+
+set cursorline          " highlight current line
+
+set wildmenu            " visual autocomplete for command menu
+
+set showmatch           " highlight matching [{()}]
